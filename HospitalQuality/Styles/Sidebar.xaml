@@ -1,0 +1,187 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+        <Geometry x:Key="HospitalLogoGeometry">
+                M10,4H14V10H20V14H14V20H10V14H4V10H10Z
+        </Geometry>
+
+        <Geometry x:Key="DashboardIconGeometry">
+                M3,3H10V10H3Z M14,3H21V10H14Z M3,14H10V21H3Z M14,14H21V21H14Z
+        </Geometry>
+
+        <Geometry x:Key="PatientsIconGeometry">
+                M12,4A4,4 0 1,1 8,8A4,4 0 0,1 12,4
+        M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z
+        </Geometry>
+
+        <Geometry x:Key="ReportsIconGeometry">
+                M4,20H8V10H4Z M10,20H14V4H10Z M16,20H20V13H16Z
+        </Geometry>
+
+        <Geometry x:Key="SettingsIconGeometry">
+                M4,6H20V8H4Z M4,11H20V13H4Z M4,16H20V18H4Z
+        M14,4A2,2 0 1,1 12,6A2,2 0 0,1 14,4
+        M8,9A2,2 0 1,1 6,11A2,2 0 0,1 8,9
+        M16,14A2,2 0 1,1 14,16A2,2 0 0,1 16,14
+        </Geometry>
+
+        <Geometry x:Key="SunIconGeometry">
+                M12,8A4,4 0 1,0 16,12A4,4 0 0,0 12,8Z
+        M12,2V4
+        M12,20V22
+        M2,12H4
+        M20,12H22
+        M4.9,4.9L6.3,6.3
+        M17.7,17.7L19.1,19.1
+        M4.9,19.1L6.3,17.7
+        M17.7,4.9L19.1,6.3
+        </Geometry>
+
+        <Geometry x:Key="MoonIconGeometry">
+                M13.5,3A8.5,8.5 0 1,0 21,11.5A6.5,6.5 0 0,1 13.5,3Z
+        </Geometry>
+
+        <Style x:Key="MenuIconPathStyle"
+                        TargetType="Path">
+                <Setter Property="Width"
+                                Value="18"/>
+                <Setter Property="Height"
+                                Value="18"/>
+                <Setter Property="Stretch"
+                                Value="Uniform"/>
+                <Setter Property="Margin"
+                                Value="12,0,0,0"/>
+                <Setter Property="Fill"
+                                Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+        </Style>
+
+        <Style x:Key="SidebarMenuItemStyle"
+                        TargetType="Button">
+                <Setter Property="Background"
+                                Value="Transparent"/>
+                <Setter Property="Foreground"
+                                Value="{DynamicResource TextOnSidebarBrush}"/>
+                <Setter Property="FontFamily"
+                                Value="{DynamicResource BodyFontFamily}"/>
+                <Setter Property="FontSize"
+                                Value="14"/>
+                <Setter Property="FontWeight"
+                                Value="Medium"/>
+                <Setter Property="Cursor"
+                                Value="Hand"/>
+                <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch"/>
+                <Setter Property="Margin"
+                                Value="0,5"/>
+                <Setter Property="FocusVisualStyle"
+                                Value="{x:Null}"/>
+                <Setter Property="Template">
+                        <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                        <Border x:Name="MenuBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="Transparent"
+                                                BorderThickness="1"
+                                                CornerRadius="14"
+                                                Padding="14,12">
+                                                <ContentPresenter HorizontalAlignment="Stretch"
+                                                                  VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                        <Setter TargetName="MenuBorder"
+                                                                        Property="Background"
+                                                                        Value="{DynamicResource SidebarHoverBrush}"/>
+                                                        <Setter TargetName="MenuBorder"
+                                                                        Property="BorderBrush"
+                                                                        Value="{DynamicResource PrimaryBrush}"/>
+                                                        <Setter Property="Foreground"
+                                                                        Value="{DynamicResource TextOnSidebarHoverBrush}"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsPressed"
+                                                                Value="True">
+                                                        <Setter TargetName="MenuBorder"
+                                                                        Property="Background"
+                                                                        Value="{DynamicResource SidebarPressedBrush}"/>
+                                                </Trigger>
+                                        </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                        </Setter.Value>
+                </Setter>
+        </Style>
+
+        <Style x:Key="ThemeToggleStyle"
+                        TargetType="ToggleButton">
+                <Setter Property="Width"
+                                Value="58"/>
+                <Setter Property="Height"
+                                Value="30"/>
+                <Setter Property="Cursor"
+                                Value="Hand"/>
+                <Setter Property="FocusVisualStyle"
+                                Value="{x:Null}"/>
+                <Setter Property="Template">
+                        <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                        <Grid>
+                                                <Border x:Name="ToggleBackground"
+                                                        CornerRadius="15"
+                                                        Background="#CBD5E1"/>
+
+                                                <Canvas Width="58"
+                                                                Height="30">
+                                                        <Border x:Name="ToggleThumb"
+                                                                Canvas.Left="3"
+                                                                Canvas.Top="3"
+                                                                Width="24"
+                                                                Height="24"
+                                                                CornerRadius="12"
+                                                                Background="White">
+                                                                <Grid>
+                                                                        <Path x:Name="SunIcon"
+                                                                              Data="{StaticResource SunIconGeometry}"
+                                                                              Width="14"
+                                                                              Height="14"
+                                                                              Stretch="Uniform"
+                                                                              Fill="Transparent"
+                                                                              Stroke="#F59E0B"
+                                                                              StrokeThickness="1.7"/>
+
+                                                                        <Path x:Name="MoonIcon"
+                                                                              Data="{StaticResource MoonIconGeometry}"
+                                                                              Width="13"
+                                                                              Height="13"
+                                                                              Stretch="Uniform"
+                                                                              Fill="#FDE68A"
+                                                                              Visibility="Collapsed"/>
+                                                                </Grid>
+                                                        </Border>
+                                                </Canvas>
+                                        </Grid>
+
+                                        <ControlTemplate.Triggers>
+                                                <Trigger Property="IsChecked"
+                                                                Value="True">
+                                                        <Setter TargetName="ToggleBackground"
+                                                                        Property="Background"
+                                                                        Value="#1D4ED8"/>
+                                                        <Setter TargetName="ToggleThumb"
+                                                                        Property="Background"
+                                                                        Value="#0F172A"/>
+                                                        <Setter TargetName="SunIcon"
+                                                                        Property="Visibility"
+                                                                        Value="Collapsed"/>
+                                                        <Setter TargetName="MoonIcon"
+                                                                        Property="Visibility"
+                                                                        Value="Visible"/>
+                                                </Trigger>
+                                        </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                        </Setter.Value>
+                </Setter>
+        </Style>
+
+</ResourceDictionary>

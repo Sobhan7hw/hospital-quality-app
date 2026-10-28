@@ -1,0 +1,439 @@
+<Window x:Class="HospitalQuality.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:HospitalQuality.Controls"
+        Title="نرم‌افزار بهبود کیفیت بیمارستان"
+        Width="1360"
+        Height="860"
+        MinWidth="1100"
+        MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        FlowDirection="RightToLeft"
+        Background="{DynamicResource BackgroundBrush}"
+        FontFamily="{DynamicResource BodyFontFamily}"
+        StateChanged="Window_StateChanged">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="46"
+                      ResizeBorderThickness="6"
+                      CornerRadius="0"
+                      GlassFrameThickness="0"
+                      UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
+
+    <Border Background="{DynamicResource BackgroundBrush}"
+            BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1">
+
+        <Grid x:Name="RootGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    Height="46"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="0,0,0,1">
+
+                <Grid Margin="14,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                        <Border Width="24"
+                                Height="24"
+                                CornerRadius="7"
+                                Background="{DynamicResource PrimaryBrush}">
+                            <TextBlock Text="ک"
+                                       FontFamily="{DynamicResource HeadingFontFamily}"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <TextBlock Text="نرم‌افزار بهبود کیفیت بیمارستان"
+                                   FontFamily="{DynamicResource HeadingFontFamily}"
+                                   FontSize="13"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                FlowDirection="LeftToRight">
+
+                        <Button x:Name="CloseButton"
+                                Style="{StaticResource CloseWindowButtonStyle}"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                Click="CloseButton_Click">
+                            <Path Data="{StaticResource CloseWindowGeometry}"
+                                  Width="12"
+                                  Height="12"
+                                  Stretch="Uniform"
+                                  Fill="Transparent"
+                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                  StrokeThickness="1.5"/>
+                        </Button>
+
+                        <Button x:Name="MaximizeButton"
+                                Style="{StaticResource WindowButtonStyle}"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                Click="MaximizeButton_Click">
+                            <Grid>
+                                <Path x:Name="MaximizeIcon"
+                                      Data="{StaticResource MaximizeWindowGeometry}"
+                                      Style="{StaticResource WindowIconPathStyle}"/>
+
+                                <Path x:Name="RestoreIcon"
+                                      Data="{StaticResource RestoreWindowGeometry}"
+                                      Style="{StaticResource WindowIconPathStyle}"
+                                      Visibility="Collapsed"/>
+                            </Grid>
+                        </Button>
+
+                        <Button x:Name="MinimizeButton"
+                                Style="{StaticResource WindowButtonStyle}"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                Click="MinimizeButton_Click">
+                            <Path Data="{StaticResource MinimizeWindowGeometry}"
+                                  Style="{StaticResource WindowIconPathStyle}"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="292"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Background="{DynamicResource SidebarBackgroundBrush}"
+                        Padding="20,24,20,20">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Width="46"
+                                    Height="46"
+                                    CornerRadius="14"
+                                    Background="{DynamicResource PrimaryBrush}">
+                                <Path Data="{StaticResource HospitalLogoGeometry}"
+                                      Width="22"
+                                      Height="22"
+                                      Stretch="Uniform"
+                                      Fill="White"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1"
+                                        Margin="12,0,0,0"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="بیمارستان هوشمند"
+                                           FontFamily="{DynamicResource HeadingFontFamily}"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource TextOnSidebarBrush}"/>
+
+                                <TextBlock Text="سامانه مدیریت کیفیت"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource TextSecondaryOnSidebarBrush}"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Grid.Row="1"
+                                Margin="0,24,0,0"
+                                Background="{DynamicResource SidebarSurfaceBrush}"
+                                CornerRadius="16"
+                                Padding="14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel>
+                                    <TextBlock x:Name="ThemeModeText"
+                                               Text="حالت روشن"
+                                               FontFamily="{DynamicResource BodyFontFamily}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextOnSidebarBrush}"/>
+
+                                    <TextBlock Text="تغییر ظاهر برنامه"
+                                               FontSize="11"
+                                               Foreground="{DynamicResource TextSecondaryOnSidebarBrush}"
+                                               Margin="0,4,0,0"/>
+                                </StackPanel>
+
+                                <ToggleButton x:Name="ThemeToggle"
+                                              Grid.Column="1"
+                                              Style="{StaticResource ThemeToggleStyle}"
+                                              VerticalAlignment="Center"
+                                              Checked="ThemeToggle_Checked"
+                                              Unchecked="ThemeToggle_Unchecked"/>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock Grid.Row="2"
+                                   Text="منوی اصلی"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource TextSecondaryOnSidebarBrush}"
+                                   Margin="8,28,0,8"/>
+
+                        <StackPanel Grid.Row="3">
+
+                            <Button Style="{StaticResource SidebarMenuItemStyle}"
+                                    Click="DashboardButton_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource DashboardIconGeometry}"
+                                          Style="{StaticResource MenuIconPathStyle}"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="داشبورد"
+                                               TextAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,12,0"/>
+                                </Grid>
+                            </Button>
+
+                            <Button Style="{StaticResource SidebarMenuItemStyle}"
+                                    Click="PatientsButton_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource PatientsIconGeometry}"
+                                          Style="{StaticResource MenuIconPathStyle}"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="بیماران"
+                                               TextAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,12,0"/>
+                                </Grid>
+                            </Button>
+
+                            <Button Style="{StaticResource SidebarMenuItemStyle}"
+                                    Click="ReportsButton_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource ReportsIconGeometry}"
+                                          Style="{StaticResource MenuIconPathStyle}"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="گزارش‌ها"
+                                               TextAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,12,0"/>
+                                </Grid>
+                            </Button>
+
+                            <Button Style="{StaticResource SidebarMenuItemStyle}"
+                                    Click="SettingsButton_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource SettingsIconGeometry}"
+                                          Style="{StaticResource MenuIconPathStyle}"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="تنظیمات"
+                                               TextAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,12,0"/>
+                                </Grid>
+                            </Button>
+
+                        </StackPanel>
+
+                        <Border Grid.Row="4"
+                                Background="{DynamicResource SidebarSurfaceBrush}"
+                                CornerRadius="16"
+                                Padding="14">
+                            <StackPanel>
+                                <TextBlock Text="نسخه ۱.۰.۰"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextOnSidebarBrush}"/>
+
+                                <TextBlock Text="پوسته گرافیکی اولیه"
+                                           FontSize="11"
+                                           Foreground="{DynamicResource TextSecondaryOnSidebarBrush}"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0"
+                            Margin="28,28,28,0">
+                        <TextBlock x:Name="HeaderTitle"
+                                   Text="داشبورد"
+                                   Style="{StaticResource PageTitleStyle}"/>
+
+                        <TextBlock x:Name="HeaderSubtitle"
+                                   Text="نمای کلی پوسته گرافیکی و وضعیت ظاهری برنامه"
+                                   Style="{StaticResource PageSubtitleStyle}"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <ScrollViewer Grid.Row="1"
+                                  Margin="28,20,28,28"
+                                  VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource CardBorderStyle}">
+                                    <StackPanel>
+                                        <TextBlock Text="شاخص کیفیت"
+                                                   Style="{StaticResource CaptionTextStyle}"/>
+
+                                        <TextBlock Text="۸۵٪"
+                                                   Style="{StaticResource StatValueStyle}"
+                                                   Foreground="{DynamicResource PrimaryBrush}"
+                                                   Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="1"
+                                        Style="{StaticResource CardBorderStyle}"
+                                        Margin="0,0,18,0">
+                                    <StackPanel>
+                                        <TextBlock Text="بیماران فعال"
+                                                   Style="{StaticResource CaptionTextStyle}"/>
+
+                                        <TextBlock Text="۱۲۴"
+                                                   Style="{StaticResource StatValueStyle}"
+                                                   Foreground="{DynamicResource SuccessBrush}"
+                                                   Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="2"
+                                        Style="{StaticResource CardBorderStyle}"
+                                        Margin="0,0,18,0">
+                                    <StackPanel>
+                                        <TextBlock Text="گزارش‌های امروز"
+                                                   Style="{StaticResource CaptionTextStyle}"/>
+
+                                        <TextBlock Text="۸"
+                                                   Style="{StaticResource StatValueStyle}"
+                                                   Foreground="{DynamicResource InfoBrush}"
+                                                   Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <Border Style="{StaticResource CardBorderStyle}"
+                                    Margin="0,18,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="وضعیت پوسته گرافیکی"
+                                               Style="{StaticResource Heading2Style}"/>
+
+                                    <TextBlock Text="این ناحیه برای نمایش محتوای اصلی برنامه استفاده می‌شود. در مرحله فعلی فقط پوسته گرافیکی، تم روشن و تاریک، سایدبار و سیستم اعلان پیاده‌سازی شده است."
+                                               Style="{StaticResource BodyTextStyle}"
+                                               TextWrapping="Wrap"
+                                               Margin="0,10,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <controls:ToastHost x:Name="ToastHost"
+                                        Grid.RowSpan="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom"
+                                        Margin="28"
+                                        Panel.ZIndex="1000"/>
+                </Grid>
+            </Grid>
+
+            <Canvas x:Name="ThemeRevealCanvas"
+                    Grid.RowSpan="2"
+                    Panel.ZIndex="950"
+                    IsHitTestVisible="False"
+                    ClipToBounds="True"
+                    Background="Transparent"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                <Ellipse x:Name="ThemeRevealEllipse"
+                         Width="100"
+                         Height="100"
+                         Visibility="Collapsed"
+                         Opacity="0"
+                         RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <ScaleTransform x:Name="ThemeRevealScale"
+                                        ScaleX="0"
+                                        ScaleY="0"/>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+            </Canvas>
+
+        </Grid>
+    </Border>
+</Window>
