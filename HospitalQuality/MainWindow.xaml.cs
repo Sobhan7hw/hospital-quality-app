@@ -15,6 +15,8 @@ namespace HospitalQuality
         private readonly ThemeService _themeService;
         private readonly ToastService _toastService;
 
+        private AppSettings _currentSettings;
+
         private bool _isInitializing;
         private bool _isThemeAnimating;
 
@@ -23,21 +25,31 @@ namespace HospitalQuality
             _settingsService = new SettingsService();
             _themeService = new ThemeService();
 
-            var settings = _settingsService.Load();
+            _currentSettings = _settingsService.Load();
 
             InitializeComponent();
 
             _toastService = new ToastService(ToastHost);
 
             _isInitializing = true;
-            ThemeToggle.IsChecked = settings.IsDarkTheme;
+
+            ThemeToggle.IsChecked = _currentSettings.IsDarkTheme;
+
+            if (_currentSettings.IsSettingsSectionExpanded)
+            {
+                SettingsSectionToggle.IsChecked = true;
+                SettingsSectionContent.Visibility = Visibility.Visible;
+                SettingsSectionContent.Opacity = 1;
+                SettingsChevronRotation.Angle = 180;
+            }
+
             _isInitializing = false;
 
-            _themeService.SetDarkTheme(settings.IsDarkTheme);
+            _themeService.SetDarkTheme(_currentSettings.IsDarkTheme);
 
-            ThemeModeText.Text = settings.IsDarkTheme ? "حالت تاریک" : "حالت روشن";
+            ThemeModeText.Text = _currentSettings.IsDarkTheme ? "حالت تاریک" : "حالت روشن";
 
-            if (settings.IsDarkTheme)
+            if (_currentSettings.IsDarkTheme)
             {
                 AnimateToggleThumb(31, immediate: true);
             }
@@ -205,13 +217,93 @@ namespace HospitalQuality
 
         private void SaveThemeSetting(bool isDarkTheme)
         {
+            _currentSettings.IsDarkTheme = isDarkTheme;
+
             Task.Run(() =>
             {
-                _settingsService.Save(new AppSettings
-                {
-                    IsDarkTheme = isDarkTheme
-                });
+                _settingsService.Save(_currentSettings);
             });
+        }
+
+        private void SaveSettingsSectionState(bool isExpanded)
+        {
+            _currentSettings.IsSettingsSectionExpanded = isExpanded;
+
+            Task.Run(() =>
+            {
+                _settingsService.Save(_currentSettings);
+            });
+        }
+
+        private void SettingsSectionToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_isInitializing)
+            {
+                return;
+            }
+
+            SaveSettingsSectionState(true);
+            AnimateSettingsSection(expand: true);
+        }
+
+        private void SettingsSectionToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (_isInitializing)
+            {
+                return;
+            }
+
+            SaveSettingsSectionState(false);
+            AnimateSettingsSection(expand: false);
+        }
+
+        private void AnimateSettingsSection(bool expand)
+        {
+            if (SettingsSectionContent == null || SettingsChevronRotation == null)
+            {
+                return;
+            }
+
+            var chevronAnimation = new DoubleAnimation
+            {
+                To = expand ? 180 : 0,
+                Duration = TimeSpan.FromMilliseconds(260),
+                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+            };
+
+            SettingsChevronRotation.BeginAnimation(RotateTransform.AngleProperty, chevronAnimation);
+
+            if (expand)
+            {
+                SettingsSectionContent.Visibility = Visibility.Visible;
+
+                var fadeIn = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromMilliseconds(260),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                };
+
+                SettingsSectionContent.BeginAnimation(OpacityProperty, fadeIn);
+            }
+            else
+            {
+                var fadeOut = new DoubleAnimation
+                {
+                    From = 1,
+                    To = 0,
+                    Duration = TimeSpan.FromMilliseconds(220),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn }
+                };
+
+                fadeOut.Completed += (sender, args) =>
+                {
+                    SettingsSectionContent.Visibility = Visibility.Collapsed;
+                };
+
+                SettingsSectionContent.BeginAnimation(OpacityProperty, fadeOut);
+            }
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
@@ -261,22 +353,22 @@ namespace HospitalQuality
             _toastService.ShowToast("داشبورد انتخاب شد.", ToastType.Success);
         }
 
-        private void PatientsButton_Click(object sender, RoutedEventArgs e)
+        private void HospitalInfoButton_Click(object sender, RoutedEventArgs e)
         {
-            SetPage("بیماران", "این بخش در مراحل بعدی فعال خواهد شد");
-            _toastService.ShowToast("بخش بیماران در مراحل بعدی فعال می‌شود.", ToastType.Info);
+            SetPage("اطلاعات بیمارستان", "این بخش در مراحل بعدی فعال خواهد شد");
+            _toastService.ShowToast("بخش اطلاعات بیمارستان در مراحل بعدی فعال می‌شود.", ToastType.Info);
         }
 
-        private void ReportsButton_Click(object sender, RoutedEventArgs e)
+        private void PersonnelButton_Click(object sender, RoutedEventArgs e)
         {
-            SetPage("گزارش‌ها", "این بخش در مراحل بعدی فعال خواهد شد");
-            _toastService.ShowToast("بخش گزارش‌ها در مراحل بعدی فعال می‌شود.", ToastType.Warning);
+            SetPage("مدیریت پرسنل", "این بخش در مراحل بعدی فعال خواهد شد");
+            _toastService.ShowToast("بخش مدیریت پرسنل در مراحل بعدی فعال می‌شود.", ToastType.Info);
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private void UnitsButton_Click(object sender, RoutedEventArgs e)
         {
-            SetPage("تنظیمات", "این بخش در مراحل بعدی فعال خواهد شد");
-            _toastService.ShowToast("بخش تنظیمات در مراحل بعدی فعال می‌شود.", ToastType.Warning);
+            SetPage("واحدها / بخش‌ها", "این بخش در مراحل بعدی فعال خواهد شد");
+            _toastService.ShowToast("بخش واحدها / بخش‌ها در مراحل بعدی فعال می‌شود.", ToastType.Info);
         }
 
         private void SetPage(string title, string subtitle)

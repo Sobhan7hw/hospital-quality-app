@@ -7,6 +7,7 @@ namespace HospitalQuality.Services
     public class AppSettings
     {
         public bool IsDarkTheme { get; set; }
+        public bool IsSettingsSectionExpanded { get; set; }
     }
 
     public class SettingsService
@@ -67,7 +68,6 @@ namespace HospitalQuality.Services
             }
             catch
             {
-                // اگر ذخیره تنظیمات به هر دلیل ممکن نبود، برنامه نباید متوقف شود.
             }
         }
     }

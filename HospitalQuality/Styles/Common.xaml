@@ -40,7 +40,7 @@
         <Style x:Key="CaptionTextStyle"
                         TargetType="TextBlock">
                 <Setter Property="FontFamily"
-                                Value="{DynamicResource BodyFontFamily}"/>
+                                Value="{DynamicResource CaptionFontFamily}"/>
                 <Setter Property="FontSize"
                                 Value="12"/>
                 <Setter Property="Foreground"
@@ -66,7 +66,7 @@
                 <Setter Property="BorderThickness"
                                 Value="1"/>
                 <Setter Property="CornerRadius"
-                                Value="18"/>
+                                Value="20"/>
                 <Setter Property="Padding"
                                 Value="24"/>
                 <Setter Property="Effect">

@@ -1,30 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-        <Geometry x:Key="HospitalLogoGeometry">
-                M10,4H14V10H20V14H14V20H10V14H4V10H10Z
-        </Geometry>
-
-        <Geometry x:Key="DashboardIconGeometry">
-                M3,3H10V10H3Z M14,3H21V10H14Z M3,14H10V21H3Z M14,14H21V21H14Z
-        </Geometry>
-
-        <Geometry x:Key="PatientsIconGeometry">
-                M12,4A4,4 0 1,1 8,8A4,4 0 0,1 12,4
-        M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z
-        </Geometry>
-
-        <Geometry x:Key="ReportsIconGeometry">
-                M4,20H8V10H4Z M10,20H14V4H10Z M16,20H20V13H16Z
-        </Geometry>
-
-        <Geometry x:Key="SettingsIconGeometry">
-                M4,6H20V8H4Z M4,11H20V13H4Z M4,16H20V18H4Z
-        M14,4A2,2 0 1,1 12,6A2,2 0 0,1 14,4
-        M8,9A2,2 0 1,1 6,11A2,2 0 0,1 8,9
-        M16,14A2,2 0 1,1 14,16A2,2 0 0,1 16,14
-        </Geometry>
-
         <Geometry x:Key="SunIconGeometry">
                 M12,8A4,4 0 1,0 16,12A4,4 0 0,0 12,8Z
         M12,2V4
@@ -41,19 +17,9 @@
                 M13.5,3A8.5,8.5 0 1,0 21,11.5A6.5,6.5 0 0,1 13.5,3Z
         </Geometry>
 
-        <Style x:Key="MenuIconPathStyle"
-                        TargetType="Path">
-                <Setter Property="Width"
-                                Value="18"/>
-                <Setter Property="Height"
-                                Value="18"/>
-                <Setter Property="Stretch"
-                                Value="Uniform"/>
-                <Setter Property="Margin"
-                                Value="12,0,0,0"/>
-                <Setter Property="Fill"
-                                Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
-        </Style>
+        <Geometry x:Key="ChevronDownGeometry">
+                M6,9L12,15L18,9
+        </Geometry>
 
         <Style x:Key="SidebarMenuItemStyle"
                         TargetType="Button">
@@ -72,7 +38,7 @@
                 <Setter Property="HorizontalContentAlignment"
                                 Value="Stretch"/>
                 <Setter Property="Margin"
-                                Value="0,5"/>
+                                Value="0,3"/>
                 <Setter Property="FocusVisualStyle"
                                 Value="{x:Null}"/>
                 <Setter Property="Template">
@@ -82,9 +48,9 @@
                                                 Background="{TemplateBinding Background}"
                                                 BorderBrush="Transparent"
                                                 BorderThickness="1"
-                                                CornerRadius="14"
-                                                Padding="14,12">
-                                                <ContentPresenter HorizontalAlignment="Stretch"
+                                                CornerRadius="12"
+                                                Padding="14,11">
+                                                <ContentPresenter HorizontalAlignment="Left"
                                                                   VerticalAlignment="Center"/>
                                         </Border>
 
@@ -94,9 +60,6 @@
                                                         <Setter TargetName="MenuBorder"
                                                                         Property="Background"
                                                                         Value="{DynamicResource SidebarHoverBrush}"/>
-                                                        <Setter TargetName="MenuBorder"
-                                                                        Property="BorderBrush"
-                                                                        Value="{DynamicResource PrimaryBrush}"/>
                                                         <Setter Property="Foreground"
                                                                         Value="{DynamicResource TextOnSidebarHoverBrush}"/>
                                                 </Trigger>
@@ -106,6 +69,52 @@
                                                         <Setter TargetName="MenuBorder"
                                                                         Property="Background"
                                                                         Value="{DynamicResource SidebarPressedBrush}"/>
+                                                </Trigger>
+                                        </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                        </Setter.Value>
+                </Setter>
+        </Style>
+
+        <Style x:Key="SidebarSectionHeaderStyle"
+                        TargetType="ToggleButton">
+                <Setter Property="Background"
+                                Value="Transparent"/>
+                <Setter Property="Foreground"
+                                Value="{DynamicResource TextSecondaryOnSidebarBrush}"/>
+                <Setter Property="FontFamily"
+                                Value="{DynamicResource CaptionFontFamily}"/>
+                <Setter Property="FontSize"
+                                Value="13"/>
+                <Setter Property="FontWeight"
+                                Value="SemiBold"/>
+                <Setter Property="Cursor"
+                                Value="Hand"/>
+                <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch"/>
+                <Setter Property="Margin"
+                                Value="0,12,0,4"/>
+                <Setter Property="FocusVisualStyle"
+                                Value="{x:Null}"/>
+                <Setter Property="Template">
+                        <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="SectionBorder"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="10"
+                                                Padding="12,8">
+                                                <ContentPresenter HorizontalAlignment="Left"
+                                                                  VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                        <Setter TargetName="SectionBorder"
+                                                                        Property="Background"
+                                                                        Value="{DynamicResource SidebarHoverBrush}"/>
+                                                        <Setter Property="Foreground"
+                                                                        Value="{DynamicResource TextOnSidebarHoverBrush}"/>
                                                 </Trigger>
                                         </ControlTemplate.Triggers>
                                 </ControlTemplate>

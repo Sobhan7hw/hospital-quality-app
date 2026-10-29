@@ -10,7 +10,11 @@
     </FontFamily>
 
     <FontFamily x:Key="DataFontFamily">
-        pack://application:,,,/Assets/Fonts/#Noto Kufi Arabic, Segoe UI, Tahoma
+        pack://application:,,,/Assets/Fonts/#Estedad, Segoe UI, Tahoma
+    </FontFamily>
+
+    <FontFamily x:Key="CaptionFontFamily">
+        pack://application:,,,/Assets/Fonts/#Estedad, Segoe UI, Tahoma
     </FontFamily>
 
 </ResourceDictionary>
